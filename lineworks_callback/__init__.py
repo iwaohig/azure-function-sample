@@ -7,7 +7,7 @@ from flask import Request, jsonify
 
 # LINE WORKS Bot Credentials
 CHANNEL_SECRET = "+9/2qJd45/R3a18/6xUUlo1r5HSJYZ"
-BOT_API_URL = "https://www.worksapis.com/v1.0/bot"
+BOT_API_URL = "https://www.worksapis.com/v1.0/bots"
 ACCESS_TOKEN = "jp1AAABHD12ezPpVQWI137q06Dk+w1OLLF3XxGkT1H/RIWdvY/TcNBADXGXeaQfcd3Ay6JQENlwK0xZ6PHB+gRG8kxMgnZLyUCC53Q7f9zYbCxH11k4q8qUswl8xzsWKOFK8aHU69zxjN0zcFZBXshkqZkNN8lgFE0UmYoYMJ5ItWLKV+klRcE9FdNpjSmlKu4Ng0GyeoUhOAdvvtiMielSfN93OYiM5rEJY2NWbFvqgmBACpsxrfIP1DSHRnhh3DQ3/vzXjz6ibTGekrJ5yjH1h3Jh8dUz7d90JfDqL7HqvsVKN6iM6gNMcBdg/k8wDuu/0skPSj1jFOro8Y0FtS84de0GhRnGKVyx67Er4nJfX1NrDBjessZ5/fKeM+z4HqEEpgIF0g==.kwiu9yNovfcs8Rumz2QSOg"
 
 def main(req: Request) -> jsonify:
@@ -52,7 +52,6 @@ def reply_to_sender(user_id, message):
         "Authorization": f"Bearer {ACCESS_TOKEN}"
     }
     payload = {
-        "botNo": "your-bot-no",
         "accountId": user_id,
         "content": {
             "type": "text",
@@ -60,6 +59,10 @@ def reply_to_sender(user_id, message):
         }
     }
 
-    response = requests.post(f"{BOT_API_URL}/message/sendMessage", json=payload, headers=headers)
+    # メッセージ送信のエンドポイント
+    url = f"{BOT_API_URL}/{your_bot_no}/messages"
+
+    response = requests.post(url, json=payload, headers=headers)
     response.raise_for_status()
     logging.info(f"Message sent successfully: {response.json()}")
+
